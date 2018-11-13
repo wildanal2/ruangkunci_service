@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.7.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 13, 2018 at 06:10 AM
--- Server version: 10.1.36-MariaDB
--- PHP Version: 5.6.38
+-- Generation Time: 13 Nov 2018 pada 16.19
+-- Versi Server: 10.1.28-MariaDB
+-- PHP Version: 5.6.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,14 +25,14 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jadwal`
+-- Struktur dari tabel `jadwal`
 --
 
 CREATE TABLE `jadwal` (
   `id` int(11) NOT NULL,
   `id_kelas` int(11) NOT NULL,
   `hari` varchar(15) NOT NULL,
-  `waktu` time NOT NULL,
+  `waktu` varchar(20) NOT NULL,
   `matkul` varchar(30) NOT NULL,
   `sks` int(11) NOT NULL,
   `jam` int(11) NOT NULL,
@@ -40,10 +40,20 @@ CREATE TABLE `jadwal` (
   `pengajar` varchar(75) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `jadwal`
+--
+
+INSERT INTO `jadwal` (`id`, `id_kelas`, `hari`, `waktu`, `matkul`, `sks`, `jam`, `kelas`, `pengajar`) VALUES
+(1, 0, 'Senin', '07.00-12.10', 'Praktikum Pemrograman Berbasis', 3, 6, 'TI-2E', 'Ridwan Rismanto, SST.,M.Kom.'),
+(2, 0, 'Senin', '12.40-18.00', 'Praktikum Pemrograman Berbasis', 3, 6, 'TI-2D', 'Arie Rachmad Syulistyo,S.Kom.,M.Kom.'),
+(3, 0, 'Selasa', '07.00-12.10', 'Praktikum Pemrograman Berbasis', 3, 6, 'TI-2C', 'Imam Fahrur Rozi,ST.,MT.'),
+(4, 0, 'Selasa', '12.40-18.00', 'Praktikum Pemrograman Berbasis', 3, 6, 'TI-2B', 'Dian Hanifudin Subhi,S.Kom,M.Kom');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kelas`
+-- Struktur dari tabel `kelas`
 --
 
 CREATE TABLE `kelas` (
@@ -54,10 +64,20 @@ CREATE TABLE `kelas` (
   `img` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `kelas`
+--
+
+INSERT INTO `kelas` (`id`, `ruang`, `nama_lab`, `lokasi`, `img`) VALUES
+(1, 'LKJ 3', 'KOMPUTASI DAN JARINGAN 3', 'GD.SITI LT.7', ''),
+(2, 'LPR 4', 'PEMROGRAMAN 4', 'GD.SITI LT.7', ''),
+(3, 'LKJ 2', 'KOMPUTASI DAN JARINGAN 2', 'GD.SITI LT.7', ''),
+(4, 'LPR 2', 'PEMROGRAMAN 2', 'GD.SITI LT.7', '');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pinjaman`
+-- Struktur dari tabel `pinjaman`
 --
 
 CREATE TABLE `pinjaman` (
@@ -72,7 +92,7 @@ CREATE TABLE `pinjaman` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
@@ -114,13 +134,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `jadwal`
 --
 ALTER TABLE `jadwal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
