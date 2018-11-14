@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 13 Nov 2018 pada 16.19
--- Versi Server: 10.1.28-MariaDB
--- PHP Version: 5.6.32
+-- Generation Time: Nov 14, 2018 at 03:30 AM
+-- Server version: 10.1.34-MariaDB
+-- PHP Version: 5.6.37
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `jadwal`
+-- Table structure for table `jadwal`
 --
 
 CREATE TABLE `jadwal` (
@@ -41,19 +41,19 @@ CREATE TABLE `jadwal` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `jadwal`
+-- Dumping data for table `jadwal`
 --
 
 INSERT INTO `jadwal` (`id`, `id_kelas`, `hari`, `waktu`, `matkul`, `sks`, `jam`, `kelas`, `pengajar`) VALUES
-(1, 0, 'Senin', '07.00-12.10', 'Praktikum Pemrograman Berbasis', 3, 6, 'TI-2E', 'Ridwan Rismanto, SST.,M.Kom.'),
-(2, 0, 'Senin', '12.40-18.00', 'Praktikum Pemrograman Berbasis', 3, 6, 'TI-2D', 'Arie Rachmad Syulistyo,S.Kom.,M.Kom.'),
-(3, 0, 'Selasa', '07.00-12.10', 'Praktikum Pemrograman Berbasis', 3, 6, 'TI-2C', 'Imam Fahrur Rozi,ST.,MT.'),
-(4, 0, 'Selasa', '12.40-18.00', 'Praktikum Pemrograman Berbasis', 3, 6, 'TI-2B', 'Dian Hanifudin Subhi,S.Kom,M.Kom');
+(1, 2, 'Senin', '07.00-12.10', 'Praktikum Pemrograman Berbasis', 3, 6, 'TI-2E', 'Ridwan Rismanto, SST.,M.Kom.'),
+(2, 2, 'Senin', '12.40-18.00', 'Praktikum Pemrograman Berbasis', 3, 6, 'TI-2D', 'Arie Rachmad Syulistyo,S.Kom.,M.Kom.'),
+(3, 1, 'Selasa', '07.00-12.10', 'Praktikum Pemrograman Berbasis', 3, 6, 'TI-2C', 'Imam Fahrur Rozi,ST.,MT.'),
+(4, 1, 'Selasa', '12.40-18.00', 'Praktikum Pemrograman Berbasis', 3, 6, 'TI-2B', 'Dian Hanifudin Subhi,S.Kom,M.Kom');
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `kelas`
+-- Table structure for table `kelas`
 --
 
 CREATE TABLE `kelas` (
@@ -65,7 +65,7 @@ CREATE TABLE `kelas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `kelas`
+-- Dumping data for table `kelas`
 --
 
 INSERT INTO `kelas` (`id`, `ruang`, `nama_lab`, `lokasi`, `img`) VALUES
@@ -77,7 +77,7 @@ INSERT INTO `kelas` (`id`, `ruang`, `nama_lab`, `lokasi`, `img`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pinjaman`
+-- Table structure for table `pinjaman`
 --
 
 CREATE TABLE `pinjaman` (
@@ -92,7 +92,7 @@ CREATE TABLE `pinjaman` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -112,7 +112,8 @@ CREATE TABLE `users` (
 -- Indexes for table `jadwal`
 --
 ALTER TABLE `jadwal`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_kelasjad` (`id_kelas`);
 
 --
 -- Indexes for table `kelas`
@@ -134,13 +135,23 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `jadwal`
 --
 ALTER TABLE `jadwal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `jadwal`
+--
+ALTER TABLE `jadwal`
+  ADD CONSTRAINT `fk_kelasjad` FOREIGN KEY (`id_kelas`) REFERENCES `kelas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
