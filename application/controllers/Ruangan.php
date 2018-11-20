@@ -53,7 +53,7 @@ class Ruangan extends REST_Controller {
             if (!empty($_FILES)){
                 if ($_FILES["img"]["name"]) {
                     // configurasi upload file
-                    $config['upload_path']   = './assets/upload'; 
+                    $config['upload_path']   = './assets/ruangan'; 
                     $config['allowed_types'] = 'gif|jpg|png'; 
                     $config['max_size']      = 80000; 
                     $config['max_width']     = 4400; 
