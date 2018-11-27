@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2018 at 11:28 AM
+-- Generation Time: Nov 24, 2018 at 03:06 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 5.6.38
 
@@ -25,6 +25,19 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `fasilitas`
+--
+
+CREATE TABLE `fasilitas` (
+  `id` int(11) NOT NULL,
+  `id_ruang` int(11) NOT NULL,
+  `nama_fasilitas` varchar(50) NOT NULL,
+  `jumlah` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `jadwal`
 --
 
@@ -41,21 +54,6 @@ CREATE TABLE `jadwal` (
   `pengajar` varchar(75) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `jadwal`
---
-
-INSERT INTO `jadwal` (`id`, `id_kelas`, `hari`, `waktu_mulai`, `waktu_selesai`, `matkul`, `sks`, `jam`, `kelas`, `pengajar`) VALUES
-(1, 2, 'Senin', '07.00', '12.10', 'Praktikum Pemrograman Berbasis', 3, 6, 'TI-2E', 'Ridwan Rismanto, SST.,M.Kom.'),
-(2, 2, 'Senin', '12.40', '18.00', 'Praktikum Pemrograman Berbasis', 3, 6, 'TI-2D', 'Arie Rachmad Syulistyo,S.Kom.,M.Kom.'),
-(3, 1, 'Selasa', '07.00', '12.10', 'Praktikum Pemrograman Berbasis', 3, 6, 'TI-2C', 'Imam Fahrur Rozi,ST.,MT.'),
-(4, 1, 'Selasa', '12.40', '18.00', 'Praktikum Pemrograman Berbasis', 3, 6, 'TI-2B', 'Dian Hanifudin Subhi,S.Kom,M.Kom'),
-(5, 3, 'Selasa', '07.50', '12.10', 'Pemrograman Jaringan', 2, 5, 'TI-3E', 'Antonius Dutty Susilo,S.Pd, MT.'),
-(6, 3, 'Selasa', '12.40', '17.10', 'Pemrograman Jaringan', 2, 5, 'TI-3F', 'Luqman Affandi'),
-(7, 3, 'Senin', '07.50', '12.10', 'Pemrograman Jaringan', 2, 5, 'TI-3G', 'Grezio Arifi'),
-(8, 3, 'Senin', '12.40', '17.10', 'Pemrograman Jaringan', 2, 5, 'TI-3H', 'Kadek Suarjuma'),
-(9, 3, 'Rabu', '07.50', '12.10', 'Pemrograman Jaringan', 2, 5, 'TI-3C', 'Luqman Affandi');
-
 -- --------------------------------------------------------
 
 --
@@ -69,16 +67,6 @@ CREATE TABLE `kelas` (
   `lokasi` varchar(30) NOT NULL,
   `img` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `kelas`
---
-
-INSERT INTO `kelas` (`id`, `ruang`, `nama_lab`, `lokasi`, `img`) VALUES
-(1, 'LKJ 3', 'KOMPUTASI DAN JARINGAN 3', 'GD.SITI LT.7', 'ruangan/KR-01.jpg'),
-(2, 'LPR 4', 'PEMROGRAMAN 4', 'GD.SITI LT.7', 'ruangan/KR-02.jpg'),
-(3, 'LKJ 2', 'KOMPUTASI DAN JARINGAN 2', 'GD.SITI LT.7', 'ruangan/KR-03.jpg'),
-(4, 'LPR 2', 'PEMROGRAMAN 2', 'GD.SITI LT.7', 'ruangan/KR-07.jpg');
 
 -- --------------------------------------------------------
 
@@ -115,6 +103,13 @@ CREATE TABLE `users` (
 --
 
 --
+-- Indexes for table `fasilitas`
+--
+ALTER TABLE `fasilitas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fk_fasilitasruang` (`id_ruang`);
+
+--
 -- Indexes for table `jadwal`
 --
 ALTER TABLE `jadwal`
@@ -139,20 +134,32 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT for table `fasilitas`
+--
+ALTER TABLE `fasilitas`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `jadwal`
 --
 ALTER TABLE `jadwal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `fasilitas`
+--
+ALTER TABLE `fasilitas`
+  ADD CONSTRAINT `fk_fasilitasruang` FOREIGN KEY (`id_ruang`) REFERENCES `kelas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `jadwal`

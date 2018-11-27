@@ -35,7 +35,12 @@ class Ruangan extends REST_Controller {
         $this->db->where('id_kelas',$this->input->post('id'));
         $jadwal=$this->db->get();
 
-        return $this->response(array('status' => 'sukses','kelas'=>$ruangan,'jadwal'=>$jadwal->result()));  
+        $this->db->select('*');
+        $this->db->from('fasilitas');
+        $this->db->where('id_ruang',$this->input->post('id'));
+        $fasilitas=$this->db->get();
+
+        return $this->response(array('status' => 'sukses','kelas'=>$ruangan,'jadwal'=>$jadwal->result(),'fasilitas'=>$fasilitas->result()));  
     } 
 
     function TambahRuangan_post(){
