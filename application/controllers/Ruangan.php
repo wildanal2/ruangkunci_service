@@ -59,11 +59,11 @@ class Ruangan extends REST_Controller {
                 if ($_FILES["img"]["name"]) {
                     // configurasi upload file
                     $config['upload_path']   = './assets/ruangan'; 
-                    $config['allowed_types'] = 'gif|jpg|png'; 
-                    $config['max_size']      = 80000; 
-                    $config['max_width']     = 4400; 
-                    $config['max_height']    = 3320;
-                    $new_name = time().md5($_FILES["img"]['name']);
+                    $config['allowed_types'] = 'gif|jpg|png|JPEG'; 
+                    $config['max_size']      = 0; 
+                    $config['max_width']     = 0;// 0 = nolimit 
+                    $config['max_height']    = 0;
+                    $new_name = time();
                     $config['file_name'] = $new_name;  
                     
                     // load library upload
@@ -94,11 +94,11 @@ class Ruangan extends REST_Controller {
 
         }else{
             // jika ruangan sama 
-            $this->response(array('status'=>'500 Fail','result' => array($data_ruangan),"message"=>"Ruangan Sudah ada"));
+            $this->response(array('status'=>'500 Fail','result' => $data_ruangan,"message"=>"Ruangan Sudah ada"));
         }
         //respose
         if ($insert){// jika sukses di insert
-            $this->response(array('status'=>'200 OK','result' => array($data_ruangan),"message"=>$insert_image));
+            $this->response(array('status'=>'200 OK','result' => $data_ruangan,"message"=>$insert_image));
         }
     }
 
