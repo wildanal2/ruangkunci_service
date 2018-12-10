@@ -30,6 +30,10 @@ class Ruangan extends REST_Controller {
         $query=$this->db->get();
         $ruangan = $query->first_row();
 
+        $q = "SELECT p.id, p.mulai,p.selesai,p.status,p.id_admin, k.ruang,k.nama_lab, u.nim,u.kelas,u.nama,p.img AS p_img,k.img AS k_img FROM pinjaman AS p JOIN kelas as k ON p.id_kelas=k.id JOIN users as u ON p.id_user=u.nim WHERE p.mulai>=CURDATE() and id_kelas=".$this->input->post('id');
+        $riwayat = $this->db->query($q)->result();
+        
+
         $this->db->select('*');
         $this->db->from('jadwal');
         $this->db->where('id_kelas',$this->input->post('id'));
@@ -40,7 +44,7 @@ class Ruangan extends REST_Controller {
         $this->db->where('id_ruang',$this->input->post('id'));
         $fasilitas=$this->db->get();
 
-        return $this->response(array('status' => 'sukses','kelas'=>$ruangan,'jadwal'=>$jadwal->result(),'fasilitas'=>$fasilitas->result()));  
+        return $this->response(array('status' => 'sukses','kelas'=>$ruangan,'jadwal'=>$jadwal->result(),'fasilitas'=>$fasilitas->result(),'riwayat'=>$riwayat));  
     } 
 
     function TambahRuangan_post(){

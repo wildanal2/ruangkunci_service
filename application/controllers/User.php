@@ -29,6 +29,7 @@ class User extends REST_Controller {
                 'email' => $this->post('email'),
                 'password' => $this->post('password'),
                 'img' => $this->post('img'),
+                'kelas' => $this->post('kelas'),
                 'level' => $this->post('level')
             );
 

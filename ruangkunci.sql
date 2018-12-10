@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 24, 2018 at 03:06 AM
+-- Generation Time: Dec 10, 2018 at 03:36 PM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 5.6.38
 
@@ -78,8 +78,10 @@ CREATE TABLE `pinjaman` (
   `id` int(11) NOT NULL,
   `id_kelas` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `tanggal` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `status` tinyint(1) NOT NULL,
+  `mulai` datetime NOT NULL,
+  `selesai` datetime NOT NULL,
+  `status` varchar(10) NOT NULL,
+  `img` varchar(240) NOT NULL,
   `id_admin` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -93,10 +95,19 @@ CREATE TABLE `users` (
   `nim` int(11) NOT NULL,
   `nama` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
+  `kelas` varchar(10) NOT NULL,
   `password` varchar(36) NOT NULL,
   `img` varchar(200) NOT NULL,
   `level` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`nim`, `nama`, `email`, `kelas`, `password`, `img`, `level`) VALUES
+(1641720075, 'Wildan Almubarok', 'ggjs@hfn.com', 'TI-3C', 'ahahah', '', 2),
+(1641720076, 'fadli zainul', 'zn@gmail.com', 'TI-3B', '1212', '', 2);
 
 --
 -- Indexes for dumped tables
@@ -124,6 +135,12 @@ ALTER TABLE `kelas`
   ADD UNIQUE KEY `ruang` (`ruang`);
 
 --
+-- Indexes for table `pinjaman`
+--
+ALTER TABLE `pinjaman`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -137,19 +154,25 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `fasilitas`
 --
 ALTER TABLE `fasilitas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `jadwal`
 --
 ALTER TABLE `jadwal`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
+--
+-- AUTO_INCREMENT for table `pinjaman`
+--
+ALTER TABLE `pinjaman`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- Constraints for dumped tables
