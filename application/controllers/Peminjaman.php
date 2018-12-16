@@ -12,7 +12,8 @@ class Peminjaman extends REST_Controller {
     } 
 
     function index_get() {
-        $q = "SELECT p.id, p.mulai,p.selesai,p.status,p.id_admin, k.ruang,k.nama_lab, u.nim,u.nama,p.img AS p_img,k.img AS k_img FROM pinjaman AS p JOIN kelas as k ON p.id_kelas=k.id JOIN users as u ON p.id_user=u.nim WHERE p.mulai>=CURDATE() order by p.mulai DESC";
+        $q = "SELECT p.id,p.id_kelas, p.mulai,p.selesai,p.status,p.id_admin, k.ruang,k.nama_lab, u.nim,u.nama,p.img AS p_img,k.img AS k_img FROM pinjaman AS p JOIN kelas as k ON p.id_kelas=k.id JOIN users as u ON p.id_user=u.nim order by p.mulai DESC";
+        //  WHERE p.mulai>=CURDATE()
         $get_ruangan = $this->db->query($q)->result();
         
         return $this->response(array('status' => 200,'result'=>$get_ruangan));  
@@ -82,11 +83,47 @@ class Peminjaman extends REST_Controller {
 
         // insert data ke db
         $insert= $this->db->insert('pinjaman',$data);
+//      update DB
+        $put = array(
+            'status' => $this->post('status'),
+            );
+        $this->db->where('id', $this->post('id_kelas'));         
+        $update = $this->db->update('kelas', $put);
 
         //respose
-        if ($insert){// jika sukses di insert
+        if ($insert && $update){// jika sukses di insert
             $this->response(array('status'=>200,'result' => $data,"message" =>$insert_image));
         }
+    }
+
+    function kembalikan_post()
+    {
+    //  data update
+        $putpeminjam = array(
+            'selesai' => date("Y-m-d H:i:s"),
+            'status' => "selesai"
+            );
+        //query update
+        $this->db->where('id', $this->post('id'));         
+        $update = $this->db->update('pinjaman', $putpeminjam);
+
+        if ($update) {// jika sukses update
+            //data update kelas
+            $putkelas = array(
+            'status' => "tersedia",
+            );
+            //procees update
+            $this->db->where('id', $this->post('id_kelas'));         
+            $update_kelas = $this->db->update('kelas', $putkelas);
+
+            if ($update_kelas) {
+                $this->response(array('status'=>200,"message" =>"Update kelas & peminjam sukses"));
+            }else $this->response(array('status'=>404,"message" =>"Internal Server tb_kelas Error"));
+        }else{
+            $this->response(array('status'=>404,"message" =>"Internal Server tb_peminjaman Error"));
+        }
+
+
     }
 
 

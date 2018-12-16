@@ -51,7 +51,8 @@ class Ruangan extends REST_Controller {
         $data_ruangan = array(
             'ruang' => $this->post('ruang'),
             'nama_lab' => $this->post('nama_lab'),
-            'lokasi' => $this->post('lokasi')
+            'lokasi' => $this->post('lokasi'),
+            'status' => "available"
             );
         //select namaruangan sama
         $get_ruangan = $this->db->query("SELECT * FROM kelas WHERE ruang='".$data_ruangan['ruang']."'")->result();
