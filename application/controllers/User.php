@@ -40,15 +40,35 @@ class User extends REST_Controller {
             $this->response(array('status' => 'fail', 502));
         }
     }
+
+    function gantipassword_post(){
+
+        // to get detail foto lama
+        $this->db->select('*');
+        $this->db->from('users');
+        $this->db->where('id',$this->post('id'));
+        $query=$this->db->get();
+        $usr = $query->first_row();
+
+        if($usr->password==$this->post('oldpassword')){
+            $data = array(
+                    'password' => $this->post('newpassword')
+                );
+
+            // update db
+            $this->db->where('id', $this->post('id'));         
+            $update = $this->db->update('users', $data);
+            if ($update){
+                $this->response(array('status' => 200, 'result' =>$data,'message'=> "update sukses" ));
+            }
+        }else{
+            $this->response(array('status' => 404,'result' =>"", 'message'=> "Password Salah" ));
+        }
+    }
     
     //Memperbarui data User yang telah ada  
-    function updateuser_post() {         
+    function updatefotouser_post() {         
         $id = $this->post('id');
-        // memasukkan data update an         
-    	$data = array(                                 
-    		'email' => $this->post('email'),                     
-            'password' => $this->post('password')
-    	);         
         
         // to get detail foto lama
         $this->db->select('*');
@@ -108,7 +128,7 @@ class User extends REST_Controller {
     } 
 
     // get User by id
-    function User_byid_post() {
+    function userbyid_post() {
 
         $this->db->select('*');
         $this->db->from('users');
@@ -116,7 +136,7 @@ class User extends REST_Controller {
         $query=$this->db->get();
         $ruangan = $query->first_row();
         
-        return $this->response(array('status' => 'sukses','kelas'=>$ruangan));  
+        return $this->response(array('status' => 'sukses','result'=>$ruangan));  
     } 
 
 } ?>

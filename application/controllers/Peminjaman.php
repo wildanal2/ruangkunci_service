@@ -12,8 +12,17 @@ class Peminjaman extends REST_Controller {
     } 
 
     function index_get() {
-        $q = "SELECT p.id,p.id_kelas, p.mulai,p.selesai,p.status,p.id_admin, k.ruang,k.nama_lab, u.nim,u.nama,p.img AS p_img,k.img AS k_img FROM pinjaman AS p JOIN kelas as k ON p.id_kelas=k.id JOIN users as u ON p.id_user=u.nim order by p.mulai DESC";
+        $q = "SELECT p.id,p.id_kelas, p.mulai,time(p.selesai) as selesai,p.status,p.id_admin, k.ruang,k.nama_lab, u.nim,u.nama,p.img AS p_img,k.img AS k_img FROM pinjaman AS p JOIN kelas as k ON p.id_kelas=k.id JOIN users as u ON p.id_user=u.nim order by p.mulai DESC";
         //  WHERE p.mulai>=CURDATE()
+        $get_ruangan = $this->db->query($q)->result();
+        
+        return $this->response(array('status' => 200,'result'=>$get_ruangan));  
+    }
+
+    function riwayatbyid_post() {
+        $nim = $this->input->post('nim');
+
+        $q = "SELECT p.id,p.id_kelas, p.mulai,time(p.selesai)as selesai,p.status,p.id_admin, k.ruang,k.nama_lab, u.nim,u.nama,p.img AS p_img,k.img AS k_img FROM pinjaman AS p JOIN kelas as k ON p.id_kelas=k.id JOIN users as u ON p.id_user=u.nim WHERE p.id_user=".$nim." order by p.mulai DESC";
         $get_ruangan = $this->db->query($q)->result();
         
         return $this->response(array('status' => 200,'result'=>$get_ruangan));  
@@ -98,6 +107,7 @@ class Peminjaman extends REST_Controller {
 
     function kembalikan_post()
     {
+        date_default_timezone_set("Asia/Jakarta");
     //  data update
         $putpeminjam = array(
             'selesai' => date("Y-m-d H:i:s"),

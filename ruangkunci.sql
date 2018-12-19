@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 16, 2018 at 06:45 AM
+-- Generation Time: Dec 19, 2018 at 05:47 AM
 -- Server version: 10.1.36-MariaDB
 -- PHP Version: 5.6.38
 
@@ -35,25 +35,6 @@ CREATE TABLE `fasilitas` (
   `jumlah` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data for table `fasilitas`
---
-
-INSERT INTO `fasilitas` (`id`, `id_ruang`, `nama_fasilitas`, `jumlah`) VALUES
-(1, 2, 'AC', 1),
-(2, 2, 'Proyektor', 1),
-(3, 3, 'asdas', 2),
-(4, 3, 'ddfff', 1),
-(5, 3, '12ddd', 11),
-(6, 3, 'eee', 22),
-(7, 3, 'hhgjh', 2),
-(8, 3, 'xxxx', 22),
-(9, 3, 'cccc', 22),
-(10, 3, 'cccc', 22),
-(11, 3, 'cccx', 22),
-(12, 3, 'ccc2xx', 21),
-(13, 3, 'xxxx', 21);
-
 -- --------------------------------------------------------
 
 --
@@ -72,14 +53,6 @@ CREATE TABLE `jadwal` (
   `kelas` varchar(30) NOT NULL,
   `pengajar` varchar(75) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `jadwal`
---
-
-INSERT INTO `jadwal` (`id`, `id_kelas`, `hari`, `waktu_mulai`, `waktu_selesai`, `matkul`, `sks`, `jam`, `kelas`, `pengajar`) VALUES
-(1, 2, 'Senin', '07:50', '12:10', 'jarkom', 3, 6, 'TI 3C', 'Pak Lukman'),
-(2, 3, 'Senin', '12:50', '14:50', 'QMS', 3, 2, 'TI3C', 'Bu Ariyanti');
 
 -- --------------------------------------------------------
 
@@ -101,7 +74,7 @@ CREATE TABLE `kelas` (
 --
 
 INSERT INTO `kelas` (`id`, `ruang`, `nama_lab`, `lokasi`, `img`, `status`) VALUES
-(1, 'KR 01', 'Kelas kecil', 'AF Lt.1', 'ruangan/1544611136.jpg', 'dipinjam'),
+(1, 'KR 01', 'Kelas kecil', 'AF Lt.1', 'ruangan/1544611136.jpg', 'tersedia'),
 (2, 'KR 03', 'Ruang Reguler', 'AF Lt.2', 'ruangan/1544611235.jpg', 'tersedia'),
 (3, 'KR 05', 'Ruang Reguler', 'AF Lt.3', 'ruangan/1544611764.jpg', 'tersedia');
 
@@ -129,7 +102,9 @@ CREATE TABLE `pinjaman` (
 INSERT INTO `pinjaman` (`id`, `id_kelas`, `id_user`, `mulai`, `selesai`, `status`, `img`, `id_admin`) VALUES
 (22, 2, 1641720076, '2018-12-13 18:17:03', '2018-12-13 12:43:15', 'selesai', 'ruangan/1544613423.jpg', 3),
 (23, 3, 1641720075, '2018-12-13 17:17:01', '2018-12-13 12:40:49', 'selesai', 'ruangan/1544696221.jpg', 3),
-(24, 1, 1641720076, '2018-12-13 18:59:07', '0000-00-00 00:00:00', 'dipinjam', 'ruangan/1544702347.jpg', 3);
+(24, 1, 1641720076, '2018-12-13 18:59:07', '2018-12-16 14:05:40', 'selesai', 'ruangan/1544702347.jpg', 3),
+(25, 1, 1641720065, '2018-12-18 19:06:13', '2018-12-19 02:12:35', 'selesai', 'ruangan/1545134773.jpg', 3),
+(26, 2, 1641720075, '2018-12-18 19:08:25', '2018-12-19 08:15:15', 'selesai', 'ruangan/1545134905.jpg', 3);
 
 -- --------------------------------------------------------
 
@@ -143,6 +118,7 @@ CREATE TABLE `users` (
   `nama` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `kelas` varchar(10) NOT NULL,
+  `bio` varchar(225) NOT NULL,
   `password` varchar(36) NOT NULL,
   `img` varchar(200) NOT NULL,
   `level` int(11) NOT NULL
@@ -152,9 +128,11 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `nim`, `nama`, `email`, `kelas`, `password`, `img`, `level`) VALUES
-(1, 1641720075, 'Wildan Almubarok', 'ccu', 'TI-3C', 'ccu', 'users/1544933172.png', 2),
-(2, 1641720076, 'fadli zainul', 'ccu', 'TI-3B', 'ccu', 'users/1544932910.png', 2);
+INSERT INTO `users` (`id`, `nim`, `nama`, `email`, `kelas`, `bio`, `password`, `img`, `level`) VALUES
+(1, 1641720075, 'Wildan Almubarok', 'ssasa', 'TI-3C', '', 'yyy', 'users/1545161338.jpg', 2),
+(2, 1641720076, 'fadli zainul', 'ccu', 'TI-3B', '', 'ccu', 'users/1545190090.jpg', 2),
+(3, 11111, 'Admin', 'as@gm.com', 'X', '', 'a', '', 1),
+(4, 1641720065, 'Akbar Formadika', 'akbarfor@gmail.com', 'TI3C', '', 'a', '', 2);
 
 --
 -- Indexes for dumped tables
@@ -202,7 +180,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `fasilitas`
 --
 ALTER TABLE `fasilitas`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `jadwal`
@@ -220,13 +198,13 @@ ALTER TABLE `kelas`
 -- AUTO_INCREMENT for table `pinjaman`
 --
 ALTER TABLE `pinjaman`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Constraints for dumped tables
